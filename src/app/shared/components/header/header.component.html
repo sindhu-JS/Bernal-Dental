@@ -1,0 +1,40 @@
+<header>
+     <!-- STRAT NAVBAR -->
+ <nav class="navbar navbar-expand-lg fixed-top navbar-custom sticky sticky-dark"
+ id="navbar">
+ <div class="container">
+   <!-- LOGO -->
+   <a class="navbar-brand logo text-uppercase" href="/">
+     Bernal Dental
+   </a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+     <i class="mdi mdi-menu"></i>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarCollapse">
+     <ul class="navbar-nav navbar-center" id="mySidenav">
+       <li class="nav-item" [ngClass]="{'active':currentSection === 'about'}"><a href="javascript: void(0);" class="nav-link">About</a></li>
+       <li class="nav-item" [ngClass]="{'active':currentSection === 'services'}"><a href="javascript: void(0);" class="nav-link">Services</a></li>
+       <li class="nav-item" [ngClass]="{'active':currentSection === 'patient'}"><a href="javascript: void(0);" class="nav-link">Patient Resources</a></li>
+       <li class="nav-item" [ngClass]="{'active':currentSection === 'gallery'}"><a href="javascript: void(0);" class="nav-link">Gallery</a></li>
+       <li class="nav-item" [ngClass]="{'active':currentSection === 'contact'}"><a href="javascript: void(0);" class="nav-link">Contact</a></li>
+     </ul>
+     <div class="nav-button ms-auto">
+       <ul class="nav navbar-nav navbar-right">
+         <li>
+           <button type="button" class="btn btn-primary navbar-btn btn-rounded">Call Us</button>
+         </li>
+       </ul>
+     </div>
+     <div class="nav-button ms-auto">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <button type="button" class="btn btn-primary navbar-btn btn-rounded">Book Online</button>
+        </li>
+      </ul>
+    </div>
+   </div>
+ </div>
+</nav>
+<!-- END NAVBAR -->
+</header>
