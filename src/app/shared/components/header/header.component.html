@@ -7,33 +7,129 @@
    <a class="navbar-brand logo text-uppercase" href="/">
      Bernal Dental
    </a>
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-     <i class="mdi mdi-menu"></i>
-   </button>
-   <div class="collapse navbar-collapse" id="navbarCollapse">
-     <ul class="navbar-nav navbar-center" id="mySidenav">
-       <li class="nav-item" [ngClass]="{'active':currentSection === 'about'}"><a href="javascript: void(0);" class="nav-link">About</a></li>
-       <li class="nav-item" [ngClass]="{'active':currentSection === 'services'}"><a href="javascript: void(0);" class="nav-link">Services</a></li>
-       <li class="nav-item" [ngClass]="{'active':currentSection === 'patient'}"><a href="javascript: void(0);" class="nav-link">Patient Resources</a></li>
-       <li class="nav-item" [ngClass]="{'active':currentSection === 'gallery'}"><a href="javascript: void(0);" class="nav-link">Gallery</a></li>
-       <li class="nav-item" [ngClass]="{'active':currentSection === 'contact'}"><a href="javascript: void(0);" class="nav-link">Contact</a></li>
-     </ul>
-     <div class="nav-button ms-auto">
-       <ul class="nav navbar-nav navbar-right">
-         <li>
-           <button type="button" class="btn btn-primary navbar-btn btn-rounded">Call Us</button>
-         </li>
-       </ul>
-     </div>
-     <div class="nav-button ms-auto">
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <button type="button" class="btn btn-primary navbar-btn btn-rounded">Book Online</button>
-        </li>
-      </ul>
+
+   <!--menu start-->
+   <a  class="overlay-sidebar-header" [class.overlay-sidebar-header-open]="openSide" (click)="closeOverlay()"></a>
+<div class="responsive-btn">
+    <a (click)="toggleSidebar()">
+        <i class="fa fa-bars text-white" aria-hidden="true"></i>
+    </a>
+</div>
+<div class="navbar m-l-auto" id="togglebtn" [class.openSidebar]="openSide" >
+    <div class="responsive-btn">
+        <a (click)="toggleSidebar()">
+            <h5>back</h5>
+        </a>
     </div>
-   </div>
+    <ul class="main-menu">
+        <!-- 1st Level Menu -->
+        <li *ngFor="let menuItem of menuItems" [class]="menuItem.megaMenu ? 'mega-menu' : ''">
+            <!-- Sub -->
+            <a href="javascript:void(0)" *ngIf="menuItem.type === 'sub'" class="dropdown" (click)="setActive(menuItem.title)">
+                {{menuItem.title}}
+            </a>
+            <!-- Link -->
+            <a [routerLink]="!menuItem.type ? null : [menuItem.path]" routerLinkActive="active" class="dropdown" *ngIf="menuItem.type === 'link'">
+                {{menuItem.title}}
+            </a>
+            <!-- External Link -->
+            <a  href="{{ !menuItem.type ? null : menuItem.path }}" class="dropdown" *ngIf="menuItem.type === 'extLink'">
+                {{menuItem.title}}
+            </a>
+            <!-- External Tab Link -->
+            <a  href="{{ !menuItem.type ? null : menuItem.path }}" *ngIf="menuItem.type === 'extTabLink'">
+                {{menuItem.title}}
+            </a>
+
+            <!-- Mega menu -->
+            <div class="mega-menu-container" [class.opensubmenu]="isActive(menuItem.title)"
+                *ngIf="menuItem.megaMenu && menuItem.megaMenuType == 'small' || menuItem.megaMenuType == 'medium' || menuItem.megaMenuType == 'large'">
+                <div class="container">
+                    <div class="row">
+                        <div [class]="menuItem.megaMenuType == 'small' ? 'col-lg-4' : menuItem.megaMenuType == 'medium' ? 'col-lg-3' : menuItem.megaMenuType =='large'? 'col' :'' "
+                            *ngFor="let childrenItem of menuItem.children">
+                            <div class="menu-container">
+                                    <a class="menu-head" (click)="setChildActive(childrenItem.title)">{{childrenItem.title}}</a>
+                                <ul [class.menu-icon]="menuItem.title == 'Elements'" [class.openSubChildMenu]="ischildActive(childrenItem.title)" >
+                                    <li  *ngFor="let subChildrenItem of childrenItem.children" >
+                                        <a [routerLink]="!subChildrenItem.type ? null : [subChildrenItem.path]" routerLinkActive="active"
+                                            *ngIf="subChildrenItem.type === 'link'">
+                                            <i class="icon-{{subChildrenItem.icon}}"></i>{{subChildrenItem.title}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2nd Level Menu -->
+            <ul *ngIf="menuItem.children && !menuItem.megaMenu" [class.opensubmenu]="isActive(menuItem.title)">
+                    <!-- Simple Menu Start-->
+                    <li *ngFor="let childrenItem of menuItem.children"  [class.sub-menu]="childrenItem.children">
+                        <!-- Sub -->
+                        <a href="javascript:void(0)" *ngIf="childrenItem.type === 'sub'" (click)="setChildActive(childrenItem.title)">
+                                {{childrenItem.title}}
+                             </a>
+                        <!-- Link -->
+                        <a [routerLink]="!childrenItem.type ? null : [childrenItem.path]" routerLinkActive="active"
+                            *ngIf="childrenItem.type === 'link' && !menuItem.megaMenu">
+                            {{childrenItem.title}}
+                        </a>
+                        <!-- External Link -->
+                        <a href="{{ !childrenItem.type ? null : childrenItem.path }}"
+                            *ngIf="childrenItem.type === 'extLink' && !menuItem.megaMenu">
+                            {{childrenItem.title}}
+                        </a>
+                        <!-- External Tab Link -->
+                        <a href="{{ !childrenItem.type ? null : childrenItem.path }}" target="_blank"
+                            *ngIf="childrenItem.type === 'extTabLink' && !menuItem.megaMenu">
+                            {{childrenItem.title}}
+                        </a>
+                        <ul *ngIf="childrenItem.children" [class.openSubChildMenu]="ischildActive(childrenItem.title)">
+                                <li *ngFor="let subChildrenItem of childrenItem.children">
+                                      <!-- Sub -->
+                                         <a href="javascript:void(0)" *ngIf="subChildrenItem.type === 'sub'">
+                                            {{subChildrenItem.title}}
+                                         </a>
+                                        <!-- Link -->
+                                        <a [routerLink]="!subChildrenItem.type ? null : [subChildrenItem.path]" routerLinkActive="active"
+                                            *ngIf="subChildrenItem.type === 'link' && !menuItem.megaMenu">
+                                            {{subChildrenItem.title}}
+                                        </a>
+                                        <!-- External Link -->
+                                        <a href="{{ !subChildrenItem.type ? null : subChildrenItem.path }}"
+                                            *ngIf="subChildrenItem.type === 'extLink' && !menuItem.megaMenu">
+                                            {{subChildrenItem.title}}
+                                        </a>
+                                        <!-- External Tab Link -->
+                                        <a href="{{ !subChildrenItem.type ? null : subChildrenItem.path }}" target="_blank"
+                                            *ngIf="subChildrenItem.type === 'extTabLink' && !menuItem.megaMenu">
+                                            {{subChildrenItem.title}}
+                                        </a>
+                                </li>
+                        </ul>
+                    </li>
+            </ul>
+        
+        </li>
+        </ul>  
+</div>
+  <!--menu start-->
+  <div class="nav-button ms-auto">
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <button type="button" class="btn btn-primary navbar-btn btn-rounded">Call (925) 485-1172</button>
+      </li>
+    </ul>
+  </div>
+  <div class="nav-button ms-auto">
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <button type="button" class="btn btn-primary navbar-btn btn-rounded">Book an appointment</button>
+      </li>
+    </ul>
+  </div>
  </div>
 </nav>
 <!-- END NAVBAR -->

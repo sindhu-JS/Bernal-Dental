@@ -1,64 +1,61 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Menu, NavService } from '../../service/nav.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  styles: [`
-    .dark-modal .modal-content {
-      background-color: transparent;
-      color: white;
-      border-radius : 10px;
-    }
-    .dark-modal .modal-header {
-      border : none
-    }
-    .dark-modal .close {
-      color: white;
-    }
-  `]
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  id = 'JlvxDa7Sges';
+  public menuItems: Menu[] = [];
+  public openSide : boolean = false;
+  public activeItem: string = 'home';
+  public active: boolean = false;
+  public activeChildItem : string = '' 
+  public overlay: boolean = false;
 
-  private player: any;
-  private ytEvent: any;
-  constructor(private modalService: NgbModal) {
+  
+  constructor( public navServices: NavService) { }
+ 
+  ngOnInit() {
+    this.navServices.items.subscribe(menuItems => {
+      this.menuItems = menuItems
+    });
   }
-  currentSection = 'home';
 
-  ngOnInit(): void {
+  toggleSidebar(){
+    this.openSide = !this.openSide
   }
-  /**
-   * Window scroll method
-   */
-  // tslint:disable-next-line: typedef
-  // windowScroll() {
-  //   const navbar = document.getElementById('navbar');
-  //   if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-  //     navbar.style.backgroundColor = '#272a33';
-  //     navbar.style.padding = '10px';
-  //   }
-  //   else {
-  //     navbar.style.backgroundColor = '';
-  //     navbar.style.padding = '20px';
-  //   }
-  // }
 
-  /**
-   * Section changed method
-   * @param sectionId specify the current sectionID
-   */
-  onSectionChange(sectionId: string) {
-    this.currentSection = sectionId;
+  closeOverlay(){
+    this.openSide = false
   }
-  /**
-   * Toggle navbar
-   */
-  // toggleMenu() {
-  //   document.getElementById('navbarCollapse').classList.toggle('show');
-  // }
+
+  //For Active Main menu in Mobile View
+  setActive (menuItem: any){
+    if (this.activeItem === menuItem) {
+      this.activeItem = ''
+    } else {
+      this.activeItem = menuItem
+    }
+  }
+
+  isActive(item: any){
+    return this.activeItem === item 
+  }
+
+  // For Active Child Menu in Mobile View
+  setChildActive(subMenu: any){
+    if (this.activeChildItem === subMenu) {
+      this.activeChildItem = ''
+    } else {
+      this.activeChildItem = subMenu
+    }
+  }
+
+  ischildActive(subMenu: any){
+    return this.activeChildItem === subMenu 
+  }
+
 }

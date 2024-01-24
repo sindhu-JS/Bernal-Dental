@@ -22,9 +22,6 @@ export class FooterComponent implements OnInit {
    * Onclick color change
    * @param theme theme color
    */
-  setTheme(theme) {
-    document.getElementById('color-opt').setAttribute('href', 'assets/css/colors/' + theme + '.css');
-  }
 
   toggleSwitcher() {
     this.isVisible = !this.isVisible;
