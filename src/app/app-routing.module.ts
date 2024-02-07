@@ -21,6 +21,9 @@ import { ImplantsComponent } from './implants/implants.component';
 import { DenturesComponent } from './dentures/dentures.component';
 import { RootCanalComponent } from './root-canal/root-canal.component';
 import { FAQComponent } from './faq/faq.component';
+import { VideosComponent } from './videos/videos.component';
+import { CrownsComponent } from './crowns/crowns.component';
+import { FillingsComponent } from './fillings/fillings.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +42,14 @@ export const routes: Routes = [
   {
     path: 'about-team',
     component: AboutTeamComponent
+  },
+  {
+    path: 'videos',
+    component: VideosComponent
+  },
+  {
+    path: 'crowns',
+    component: CrownsComponent
   },
   {
     path: 'homecare',
@@ -111,7 +122,12 @@ export const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent
+  },
+  {
+    path: 'fillings',
+    component: FillingsComponent
   }
+  
 ];
 
 @NgModule({

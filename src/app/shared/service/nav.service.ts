@@ -42,8 +42,8 @@ export class NavService {
         },
         { 
          title: 'Cosmetic Dentistory',  type: 'sub', children: [
-            { path: '', title: 'Composite Fillings',  type: 'link' },
-            { path: '', title: 'Porcelain Crowns (Caps)',  type: 'link' },
+            { path: '/fillings', title: 'Composite Fillings',  type: 'link' },
+            { path: '/crowns', title: 'Porcelain Crowns (Caps)',  type: 'link' },
             { path: '', title: 'Porcelain Fixed Bridges',  type: 'link' },
             { path: '', title: 'Porcelain Veneers',  type: 'link' },
             { path: '', title: 'Teeth Whitening',  type: 'link' }
@@ -67,7 +67,7 @@ export class NavService {
                { path: '/root-canal', title: 'Root Canal Therapy',  type: 'link' }
             ]
          },
-         { title: 'Dental Videos', type: 'link', path: ''},
+         { title: 'Dental Videos', type: 'link', path: '/videos'},
       ],
     },
     {
